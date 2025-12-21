@@ -178,13 +178,16 @@ if st.session_state.page == 0:
 
     # 시작 버튼
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("테스트를 시작하시겠습니까?"):
-        if not name.strip():
-            st.warning("이름을 입력해주세요.")
-        else:
-            st.session_state.name = name.strip()
-            st.session_state.page = 1
-            st.rerun()
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("테스트를 시작하시겠습니까?", use_container_width=True):
+            if not name.strip():
+                st.warning("이름을 입력해주세요.")
+            else:
+                st.session_state.name = name.strip()
+                st.session_state.page = 1
+                st.rerun()
 
 # -------------------------------------------------
 # Step 1: 현재 상태
@@ -221,8 +224,6 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
             st.session_state.current_scores[opt["type"]] += 1
             st.session_state.page += 1
             st.rerun()
-
-
 
 
 # -------------------------------------------------
@@ -298,9 +299,12 @@ elif st.session_state.page == TYPE_PAGE:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    if st.button("보완점 확인하기"):
-        st.session_state.page = FIX_PAGE
-        st.rerun()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("보완점 확인하기", use_container_width=True):
+            st.session_state.page = FIX_PAGE
+            st.rerun()
+
 
 # -------------------------------------------------
 # 보완점 페이지
@@ -342,10 +346,13 @@ elif st.session_state.page == FIX_PAGE:
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.divider()
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("처음으로 돌아가기"):
+            st.session_state.page = 0
+            st.session_state.current_scores.clear()
+            st.session_state.ideal_scores.clear()
+            st.session_state.name = ""
+            st.rerun()
 
-    if st.button("처음으로 돌아가기"):
-        st.session_state.page = 0
-        st.session_state.current_scores.clear()
-        st.session_state.ideal_scores.clear()
-        st.session_state.name = ""
-        st.rerun()
