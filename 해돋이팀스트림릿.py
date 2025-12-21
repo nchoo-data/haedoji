@@ -234,9 +234,11 @@ elif st.session_state.page == TOTAL_CURRENT + 1:
         "<h3 style='text-align:center;'>다음 스텝을 진행합니다.</h3>",
         unsafe_allow_html=True,
     )
-    if st.button("계속하기"):
-        st.session_state.page += 1
-        st.rerun()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("계속하기"):
+            st.session_state.page += 1
+            st.rerun()
 
 # -------------------------------------------------
 # Step 2: 추구미
@@ -355,4 +357,5 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
