@@ -8,6 +8,9 @@ from collections import defaultdict
 # -------------------------------------------------
 st.set_page_config(page_title="추구미 테스트", layout="centered")
 
+[theme]
+backgroundColor = "#808080"
+
 st.markdown(
     """
     <style>
@@ -357,5 +360,6 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
