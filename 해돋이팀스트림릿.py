@@ -21,10 +21,14 @@ st.markdown(
 
     .option-btn {
         width: 100%;
-        max-width: 520px;
+        max-width: 720px;
         margin: 0 auto 28px auto;
         padding: 22px 20px;
         text-align: center;
+
+        white-space: nowrap;
+        font-size: clamp(13px, 3.5vw, 17px);
+    
         border-radius: 999px;
         border: 3px solid #AEB7E6;
         background-color: #FFFFFF;
@@ -49,14 +53,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+import streamlit.components.v1 as components
+
 def scroll_to_top():
-    st.markdown(
+    components.html(
         """
         <script>
-            window.scrollTo({ top: 0, behavior: "instant" });
+            window.parent.scrollTo(0, 0);
         </script>
         """,
-        unsafe_allow_html=True
+        height=0,
     )
 
 # -------------------------------------------------
@@ -88,6 +94,9 @@ st.markdown(
 )
 
 # -------------------------------------------------
+# 엑셀 파일 변수 설정 
+# -------------------------------------------------
+
 FILE_PATH = "추구미 26문항.xlsx"
 
 # -------------------------------------------------
@@ -368,6 +377,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
