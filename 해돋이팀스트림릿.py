@@ -8,6 +8,34 @@ from collections import defaultdict
 # -------------------------------------------------
 st.set_page_config(page_title="추구미 테스트", layout="centered")
 
+if st.session_state.get("scroll_top", False):
+    components.html(
+        """
+        <script>
+        (function () {
+          const doc = window.parent.document;
+
+          // Streamlit의 실제 스크롤 컨테이너 후보들
+          const targets = [
+            doc.querySelector('div[data-testid="stAppViewContainer"]'),
+            doc.querySelector('section.main'),
+            doc.scrollingElement,
+            doc.documentElement,
+            doc.body,
+          ].filter(Boolean);
+
+          // 가장 먼저 잡히는 대상들을 전부 top으로
+          targets.forEach(t => { try { t.scrollTop = 0; } catch(e) {} });
+
+          // iOS Safari 등에서 window 스크롤도 같이
+          try { window.parent.scrollTo(0, 0); } catch(e) {}
+        })();
+        </script>
+        """,
+        height=0,
+    )
+    st.session_state.scroll_top = False
+
 st.markdown(
     """
     <style>
@@ -56,14 +84,7 @@ st.markdown(
 import streamlit.components.v1 as components
 
 def scroll_to_top():
-    components.html(
-        """
-        <script>
-            window.parent.scrollTo(0, 0);
-        </script>
-        """,
-        height=0,
-    )
+    st.session_state.scroll_top = True
 
 # -------------------------------------------------
 # 전역 CSS (모든 요소 가운데 정렬)
@@ -146,6 +167,7 @@ if "page" not in st.session_state:
     st.session_state.name = ""
     st.session_state.current_scores = defaultdict(int)
     st.session_state.ideal_scores = defaultdict(int)
+    st.session_state.scroll_top = False
 
 # -------------------------------------------------
 # Intro Page
@@ -218,7 +240,7 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
         "<div class='center-container'><h3>Step 1. 현재상태 진단</h3></div>",
         unsafe_allow_html=True
     )
-
+    st.divider()
     options = q["options"].copy()
 
     # 질문 출력
@@ -270,7 +292,8 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
         "<div class='center-container'><h3>Step 2. 추구미 진단</h3></div>",
         unsafe_allow_html=True
     )
-
+    st.divider()
+    
     options = q["options"]
 
     # 질문 출력
@@ -377,6 +400,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
