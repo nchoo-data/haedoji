@@ -2,39 +2,15 @@ import streamlit as st
 import pandas as pd
 import random
 from collections import defaultdict
+import streamlit.components.v1 as components
 
+def scroll_to_top():
+    st.session_state.scroll_top = True
+    
 # -------------------------------------------------
 # 기본 설정
 # -------------------------------------------------
 st.set_page_config(page_title="추구미 테스트", layout="centered")
-
-if st.session_state.get("scroll_top", False):
-    components.html(
-        """
-        <script>
-        (function () {
-          const doc = window.parent.document;
-
-          // Streamlit의 실제 스크롤 컨테이너 후보들
-          const targets = [
-            doc.querySelector('div[data-testid="stAppViewContainer"]'),
-            doc.querySelector('section.main'),
-            doc.scrollingElement,
-            doc.documentElement,
-            doc.body,
-          ].filter(Boolean);
-
-          // 가장 먼저 잡히는 대상들을 전부 top으로
-          targets.forEach(t => { try { t.scrollTop = 0; } catch(e) {} });
-
-          // iOS Safari 등에서 window 스크롤도 같이
-          try { window.parent.scrollTo(0, 0); } catch(e) {}
-        })();
-        </script>
-        """,
-        height=0,
-    )
-    st.session_state.scroll_top = False
 
 st.markdown(
     """
@@ -81,11 +57,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-import streamlit.components.v1 as components
-
-def scroll_to_top():
-    st.session_state.scroll_top = True
-
 # -------------------------------------------------
 # 전역 CSS (모든 요소 가운데 정렬)
 # -------------------------------------------------
@@ -113,6 +84,33 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+# 줄바꿈 기능
+if "scroll_top" not in st.session_state:
+    st.session_state.scroll_top = False
+
+if st.session_state.scroll_top:
+    components.html(
+        """
+        <script>
+        (function () {
+          const doc = window.parent.document;
+          const targets = [
+            doc.querySelector('div[data-testid="stAppViewContainer"]'),
+            doc.querySelector('section.main'),
+            doc.scrollingElement,
+            doc.documentElement,
+            doc.body,
+          ].filter(Boolean);
+
+          targets.forEach(t => { try { t.scrollTop = 0; } catch(e) {} });
+          try { window.parent.scrollTo(0, 0); } catch(e) {}
+        })();
+        </script>
+        """,
+        height=0,
+    )
+    st.session_state.scroll_top = False
 
 # -------------------------------------------------
 # 엑셀 파일 변수 설정 
@@ -400,6 +398,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
