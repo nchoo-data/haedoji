@@ -90,7 +90,7 @@ FILE_PATH = "추구미 26문항.xlsx"
 # -------------------------------------------------
 # 엑셀 로드
 # -------------------------------------------------
-@st.cache_data
+
 def load_data():
     current_df = pd.read_excel(FILE_PATH, sheet_name="현재 내 모습 진단")
     ideal_df   = pd.read_excel(FILE_PATH, sheet_name="추구미 진단")
@@ -365,6 +365,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
