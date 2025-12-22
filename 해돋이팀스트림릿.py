@@ -310,7 +310,7 @@ elif st.session_state.page == TYPE_PAGE:
     ideal_type   = ideal_code
 
     st.markdown(
-        f"<div class='center-container'><h2>{name}님의 추구미는 '{ideal_type}' 입니다🤩</h2></div>",
+        f"<div class='center-container'><h2>{name}님의 추구미는 <br>'{ideal_type}' 입니다🤩</h2></div>",
         unsafe_allow_html=True,
     )
 
@@ -341,7 +341,7 @@ elif st.session_state.page == FIX_PAGE:
     ideal_type   = ideal_code
 
     st.markdown(
-        "<div class='center-container'><h3>추구미에 도달하기 위한 보완점을 제시해드릴게요😉</h3></div>",
+        "<div class='center-container'><h3>추구미에 도달하기 위한 <br>보완점을 제시해드릴게요😉</h3></div>",
         unsafe_allow_html=True,
     )
 
@@ -377,6 +377,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
