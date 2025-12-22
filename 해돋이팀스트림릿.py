@@ -230,7 +230,6 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
         ):
             st.session_state.current_scores[opt["type"]] += 1
             st.session_state.page += 1
-            scroll_to_top()
             st.rerun()
 
 
@@ -282,8 +281,7 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
             use_container_width=True
         ):
             st.session_state.ideal_scores[opt["type"]] += 1
-            st.session_state.page += 1
-            scroll_to_top()   
+            st.session_state.page += 1 
             st.rerun()
 
 
@@ -367,6 +365,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
