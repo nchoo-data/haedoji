@@ -143,7 +143,7 @@ if st.session_state.page == 0:
     st.markdown(
         """
         <div class="center-container">
-            <h1><b>💨나의 추구미와 가까워지기🏃‍♂️‍➡️</b></h1>
+            <h1><b>💨나의 추구미와 가까워지기🏃‍♂</b></h1>
             <p>나는 내 추구미와 얼마나 가까울까❓ 추구미에 따른 보완점 제안 서비스❕</p>
             <br>
         </div>
@@ -365,6 +365,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
