@@ -49,6 +49,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+def scroll_to_top():
+    st.markdown(
+        """
+        <script>
+            window.scrollTo({ top: 0, behavior: "instant" });
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
 
 # -------------------------------------------------
 # 전역 CSS (모든 요소 가운데 정렬)
@@ -223,6 +232,7 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
         ):
             st.session_state.current_scores[opt["type"]] += 1
             st.session_state.page += 1
+            scroll_to_top()
             st.rerun()
 
 
@@ -274,6 +284,7 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
         ):
             st.session_state.ideal_scores[opt["type"]] += 1
             st.session_state.page += 1
+            scroll_to_top()   
             st.rerun()
 
 
@@ -357,6 +368,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
