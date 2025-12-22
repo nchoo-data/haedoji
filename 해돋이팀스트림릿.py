@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 import random
 from collections import defaultdict
-import streamlit.components.v1 as components
-
-def scroll_to_top():
-    st.session_state.scroll_top = True
     
 # -------------------------------------------------
 # 기본 설정
@@ -84,33 +80,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-# 줄바꿈 기능
-if "scroll_top" not in st.session_state:
-    st.session_state.scroll_top = False
-
-if st.session_state.scroll_top:
-    components.html(
-        """
-        <script>
-        (function () {
-          const doc = window.parent.document;
-          const targets = [
-            doc.querySelector('div[data-testid="stAppViewContainer"]'),
-            doc.querySelector('section.main'),
-            doc.scrollingElement,
-            doc.documentElement,
-            doc.body,
-          ].filter(Boolean);
-
-          targets.forEach(t => { try { t.scrollTop = 0; } catch(e) {} });
-          try { window.parent.scrollTo(0, 0); } catch(e) {}
-        })();
-        </script>
-        """,
-        height=0,
-    )
-    st.session_state.scroll_top = False
 
 # -------------------------------------------------
 # 엑셀 파일 변수 설정 
@@ -398,6 +367,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
