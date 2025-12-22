@@ -94,9 +94,10 @@ FILE_PATH = "추구미 26문항.xlsx"
 def load_data():
     current_df = pd.read_excel(FILE_PATH, sheet_name="현재 내 모습 진단")
     ideal_df   = pd.read_excel(FILE_PATH, sheet_name="추구미 진단")
-    return current_df, ideal_df
+    improve_df = pd.read_excel(FILE_PATH, sheet_name="보완 포인트")
+    return current_df, ideal_df, improve_df
 
-current_df, ideal_df = load_data()
+current_df, ideal_df, improve_df = load_data()
 
 # -------------------------------------------------
 # 질문 데이터 생성
@@ -296,9 +297,11 @@ elif st.session_state.page == TYPE_PAGE:
 
     current_type = current_code
     ideal_type   = ideal_code
+    improve_row = improve_df[improve_df["type_name"] == ideal_type].iloc[0]
+    core_kw = improve_row["core_kw"]
 
     st.markdown(
-        f"<div class='center-container'><h2>{name}님의 추구미는 <br>'{ideal_type}' 입니다🤩</h2></div>",
+        f"<div class='center-container'><h2>{name}님의 추구미는'{ideal_type}' 입니다🤩<br></h2> <p><b>키워드: {core_kw}</b></p></div>",
         unsafe_allow_html=True,
     )
 
@@ -327,9 +330,17 @@ elif st.session_state.page == FIX_PAGE:
 
     current_type = current_code
     ideal_type   = ideal_code
+    improve_row = improve_df[improve_df["type_name"] == ideal_type].iloc[0]
 
+    core_msg = improve_row["core_msg"]
+    direction_msg = improve_row["direction_msg"]
+    actions = [
+        improve_row["action_1"],
+        improve_row["action_2"],
+        improve_row["action_3"],
+    ]
     st.markdown(
-        "<div class='center-container'><h3>추구미에 도달하기 위한 <br>보완점을 제시해드릴게요😉</h3></div>",
+        "<div class='center-container'><h3>🤍추구미에 도달하기 위한 [보완점]을 제시해드릴게요😉</h3></div>",
         unsafe_allow_html=True,
     )
 
@@ -338,21 +349,42 @@ elif st.session_state.page == FIX_PAGE:
     with col2:
         st.image("assets/자연형보완점이미지.jpg", width=500)
 
+    st.markdown(
+        """
+        <style>
+        .fix-box {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown(
         f"""
-        <div class="center-container" style="
-            border:1px solid #ddd;
-            border-radius:12px;
-            padding:20px;
-            margin-top:20px;
-        ">
-            <b>[추천 보완 포인트]</b><br><br>
-            {ideal_type}의 특성을 일상 속에서 의식적으로 연습해보세요.
+        <div class="fix-box">
+            <h3>핵심 메시지</h3>
+            <p>{core_msg}</p>
+            <h3>보완 방향</h3>
+            <p>{direction_msg}</p>
+            <h3>일상 속 실천</h3>
+            <ul>
+                <li>{actions[0]}</li>
+                <li>{actions[1]}</li>
+                <li>{actions[2]}</li>
+            </ul>
         </div>
         """,
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
     )
+
+
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.divider()
@@ -365,16 +397,3 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
-
-
-
-
-
-
-
-
-
-
-
-
-
