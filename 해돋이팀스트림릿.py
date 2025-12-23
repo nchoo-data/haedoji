@@ -220,7 +220,7 @@ if st.session_state.page == 0:
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("테스트를 시작하시겠습니까?", use_container_width=True):
+        if st.button("테스트 시작하기!", use_container_width=True):
             if not name.strip():
                 st.warning("이름을 입력해주세요.")
             else:
@@ -574,3 +574,4 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
