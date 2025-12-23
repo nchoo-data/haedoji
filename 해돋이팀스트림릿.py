@@ -428,37 +428,18 @@ elif st.session_state.page == FIX_PAGE:
         with col2:
             st.image("assets/자연형보완점이미지.jpg", width=500)
 
-        st.markdown(
-            """
-            <style>
-            .fix-box {
-                border: 1px solid #ddd;
-                border-radius: 12px;
-                padding: 20px;
-                margin-top: 20px;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
+        with st.container():
+            st.markdown("### 핵심 메시지")
+            st.markdown(core_msg)
+        
+            st.markdown("### 보완 방향")
+            st.markdown(direction_msg)
+        
+            st.markdown("### 일상 속 실천")
+            st.markdown(f"- {actions[0]}")
+            st.markdown(f"- {actions[1]}")
+            st.markdown(f"- {actions[2]}")
 
-         st.markdown(
-                f"""
-                <div class="fix-box">
-                    <h3>핵심 메시지</h3>
-                    <p>{core_msg}</p>
-                    <h3>보완 방향</h3>
-                    <p>{direction_msg}</p>
-                    <h3>일상 속 실천</h3>
-                    <ul>
-                        <li>{actions[0]}</li>
-                        <li>{actions[1]}</li>
-                        <li>{actions[2]}</li>
-                    </ul>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
 
     # ================================
     # [공통] 하단 버튼 영역
@@ -474,4 +455,5 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
