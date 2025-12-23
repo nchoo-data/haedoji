@@ -239,8 +239,14 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
         "<div class='center-container'><h3>Step 1. 현재상태 진단</h3></div>",
         unsafe_allow_html=True
     )
+    
+    progress = idx / TOTAL_CURRENT
+    st.progress(progress)
+    st.caption(f"{idx + 1} / {TOTAL_CURRENT}")
     st.divider()
     options = q["options"].copy()
+
+
 
     # 질문 출력
     st.markdown(
@@ -291,6 +297,11 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
         "<div class='center-container'><h3>Step 2. 추구미 진단</h3></div>",
         unsafe_allow_html=True
     )
+
+    progress = idx / TOTAL_IDEAL
+    st.progress(progress)
+
+    st.caption(f"{idx + 1} / {TOTAL_IDEAL}")
     st.divider()
     
     options = q["options"]
@@ -574,4 +585,3 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
-
