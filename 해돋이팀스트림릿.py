@@ -82,6 +82,15 @@ st.markdown(
 )
 
 # -------------------------------------------------
+# 점수판
+# -------------------------------------------------
+score_bed = [
+    3, 2.999, 2.998, 2.997, 2.996, 2.995, 2.994,
+    2.993, 2.992, 2.991, 2.99, 2.989, 2.988
+]
+
+
+# -------------------------------------------------
 # 엑셀 파일 변수 설정 
 # -------------------------------------------------
 
@@ -229,7 +238,8 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
             key=f"cur_{st.session_state.page}_{i}",
             use_container_width=True
         ):
-            st.session_state.current_scores[opt["type"]] += 1
+            score = score_bed[idx]
+            st.session_state.current_scores[opt["type"]] += score
             st.session_state.page += 1
             st.rerun()
 
@@ -281,7 +291,8 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
             key=f"ideal_{st.session_state.page}_{i}",
             use_container_width=True
         ):
-            st.session_state.ideal_scores[opt["type"]] += 1
+            score = score_bed[idx]
+            st.session_state.ideal_scores[opt["type"]] += score
             st.session_state.page += 1 
             st.rerun()
 
@@ -292,23 +303,50 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
 elif st.session_state.page == TYPE_PAGE:
     name = st.session_state.name
 
-    current_code = max(st.session_state.current_scores, key=st.session_state.current_scores.get)
-    ideal_code   = max(st.session_state.ideal_scores, key=st.session_state.ideal_scores.get)
+    current_code = max(
+        st.session_state.current_scores,
+        key=st.session_state.current_scores.get
+    )
+    ideal_code = max(
+        st.session_state.ideal_scores,
+        key=st.session_state.ideal_scores.get
+    )
 
     current_type = current_code
-    ideal_type   = ideal_code
-    improve_row = improve_df[improve_df["type_name"] == ideal_type].iloc[0]
+    ideal_type = ideal_code
+
+    improve_row = improve_df[
+        improve_df["type_name"] == ideal_type
+    ].iloc[0]
     core_kw = improve_row["core_kw"]
 
     st.markdown(
-        f"<div class='center-container'><h2>{name}님의 추구미는'{ideal_type}' 입니다🤩<br></h2> <p><b>키워드: {core_kw}</b></p></div>",
+        f"""
+        <div class='center-container'>
+            <h2>{name}님의 추구미는 '{ideal_type}' 입니다🤩</h2>
+            <p><h3>📌키워드: {core_kw}</h3></p>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
 
     st.divider()
 
-    # 🔽 하단 이미지 추가
-    st.image("assets/자연형이미지.jpg", use_container_width=True)
+    # ================================
+    # 타입별 결과 이미지 매핑
+    # ================================
+    type_image_map = {
+        "정돈형": "assets/정돈형이미지.png",
+        "온화형": "assets/온화형이미지.png",
+        "담백형": "assets/담백형이미지.png",
+        "자연형": "assets/자연형이미지.png",
+        "선샤인형": "assets/선샤인형이미지.png",
+    }
+
+    image_path = type_image_map.get(ideal_type)
+
+    if image_path:
+        st.image(image_path, use_container_width=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -318,77 +356,118 @@ elif st.session_state.page == TYPE_PAGE:
             st.session_state.page = FIX_PAGE
             st.rerun()
 
-
 # -------------------------------------------------
 # 보완점 페이지
 # -------------------------------------------------
 elif st.session_state.page == FIX_PAGE:
     name = st.session_state.name
 
-    current_code = max(st.session_state.current_scores, key=st.session_state.current_scores.get)
-    ideal_code   = max(st.session_state.ideal_scores, key=st.session_state.ideal_scores.get)
+    # 현재 타입 / 추구미 타입 계산
+    current_code = max(
+        st.session_state.current_scores,
+        key=st.session_state.current_scores.get
+    )
+    ideal_code = max(
+        st.session_state.ideal_scores,
+        key=st.session_state.ideal_scores.get
+    )
 
     current_type = current_code
-    ideal_type   = ideal_code
-    improve_row = improve_df[improve_df["type_name"] == ideal_type].iloc[0]
+    ideal_type = ideal_code
 
-    core_msg = improve_row["core_msg"]
-    direction_msg = improve_row["direction_msg"]
-    actions = [
-        improve_row["action_1"],
-        improve_row["action_2"],
-        improve_row["action_3"],
-    ]
-    st.markdown(
-        "<div class='center-container'><h3>🤍추구미에 도달하기 위한 [보완점]을 제시해드릴게요😉</h3></div>",
-        unsafe_allow_html=True,
-    )
+    # ================================
+    # 타입 일치 여부 분기
+    # ================================
+    if current_type == ideal_type:
 
-    col1, col2, col3 = st.columns([1, 2, 1])
+        # 타입이 일치할 경우: 축하 메시지 출력
+        st.markdown(
+            """
+            <div class='center-container'>
+                <h3>🎉 축하합니다!</h3>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    with col2:
-        st.image("assets/자연형보완점이미지.jpg", width=500)
+        st.image("assets/축하메시지이미지.jpg", use_container_width=True)
 
-    st.markdown(
+        st.markdown(
         """
-        <style>
-        .fix-box {
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        </style>
+        <div class='center-container'>
+            <p>
+                당신의 현재 모습은 추구미와 일치하네요😉<br>
+                보완할 점이 없습니다.앞으로도 지금의 모습을 유지하세요💪
+            </p>
         """,
-        unsafe_allow_html=True
-    )
+        unsafe_allow_html=True,
+        )
+    
+    else:
+        # ================================
+        # 타입 불일치 시 보완점 출력
+        # ================================
+        improve_row = improve_df[
+            improve_df["type_name"] == ideal_type
+        ].iloc[0]
 
-    st.markdown(
-        f"""
-        <div class="fix-box">
-            <h3>핵심 메시지</h3>
-            <p>{core_msg}</p>
-            <h3>보완 방향</h3>
-            <p>{direction_msg}</p>
-            <h3>일상 속 실천</h3>
-            <ul>
-                <li>{actions[0]}</li>
-                <li>{actions[1]}</li>
-                <li>{actions[2]}</li>
-            </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        core_msg = improve_row["core_msg"]
+        direction_msg = improve_row["direction_msg"]
+        actions = [
+            improve_row["action_1"],
+            improve_row["action_2"],
+            improve_row["action_3"],
+        ]
 
+        st.markdown(
+            "<div class='center-container'><h3>🤍추구미에 도달하기 위한 [보완점]을 제시해드릴게요😉</h3></div>",
+            unsafe_allow_html=True,
+        )
 
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.image("assets/자연형보완점이미지.jpg", width=500)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+            .fix-box {
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 20px;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
+        st.markdown(
+            f"""
+            <div class="fix-box">
+                <h3>핵심 메시지</h3>
+                <p>{core_msg}</p>
 
+                <h3>보완 방향</h3>
+                <p>{direction_msg}</p>
+
+                <h3>일상 속 실천</h3>
+                <ul>
+                    <li>{actions[0]}</li>
+                    <li>{actions[1]}</li>
+                    <li>{actions[2]}</li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # ================================
+    # [공통] 하단 버튼 영역
+    # ================================
     st.markdown("<br>", unsafe_allow_html=True)
     st.divider()
-    
+
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("처음으로 돌아가기"):
