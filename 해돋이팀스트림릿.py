@@ -243,7 +243,7 @@ elif 1 <= st.session_state.page <= TOTAL_CURRENT:
     progress = idx / TOTAL_CURRENT
     st.progress(progress)
     st.caption(f"{idx + 1} / {TOTAL_CURRENT}")
-    st.divider()
+
     options = q["options"].copy()
 
 
@@ -302,7 +302,6 @@ elif TOTAL_CURRENT + 2 <= st.session_state.page <= TOTAL_CURRENT + TOTAL_IDEAL +
     st.progress(progress)
 
     st.caption(f"{idx + 1} / {TOTAL_IDEAL}")
-    st.divider()
     
     options = q["options"]
 
@@ -585,3 +584,4 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
