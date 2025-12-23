@@ -442,25 +442,23 @@ elif st.session_state.page == FIX_PAGE:
             unsafe_allow_html=True
         )
 
-        st.markdown(
-            f"""
-            <div class="fix-box">
-                <h3>핵심 메시지</h3>
-                <p>{core_msg}</p>
-
-                <h3>보완 방향</h3>
-                <p>{direction_msg}</p>
-
-                <h3>일상 속 실천</h3>
-                <ul>
-                    <li>{actions[0]}</li>
-                    <li>{actions[1]}</li>
-                    <li>{actions[2]}</li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+         st.markdown(
+                f"""
+                <div class="fix-box">
+                    <h3>핵심 메시지</h3>
+                    <p>{core_msg}</p>
+                    <h3>보완 방향</h3>
+                    <p>{direction_msg}</p>
+                    <h3>일상 속 실천</h3>
+                    <ul>
+                        <li>{actions[0]}</li>
+                        <li>{actions[1]}</li>
+                        <li>{actions[2]}</li>
+                    </ul>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
     # ================================
     # [공통] 하단 버튼 영역
@@ -476,3 +474,4 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
