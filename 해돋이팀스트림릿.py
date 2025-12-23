@@ -323,7 +323,7 @@ elif st.session_state.page == TYPE_PAGE:
     st.markdown(
         f"""
         <div class='center-container'>
-            <h2>{name}님의 추구미는 '{ideal_type}' 입니다🤩</h2>
+            <h2>🤩{name}님의 추구미는 '{ideal_type}'입니다</h2>
             <p><h3>📌키워드: {core_kw}</h3></p>
         </div>
         """,
@@ -359,9 +359,19 @@ elif st.session_state.page == TYPE_PAGE:
 # -------------------------------------------------
 # 보완점 페이지
 # -------------------------------------------------
+
 elif st.session_state.page == FIX_PAGE:
     name = st.session_state.name
 
+    # 타입별 보완점 이미지 매핑
+    fix_image_map = {
+    "정돈형": "assets/정돈형보완점.jpg",
+    "온화형": "assets/온화형보완점.jpg",
+    "담백형": "assets/담백형보완점.jpg",
+    "자연형": "assets/자연형보완점.jpg",
+    "선샤인형": "assets/선샤인형보완점.jpg",
+    }
+   
     # 현재 타입 / 추구미 타입 계산
     current_code = max(
         st.session_state.current_scores,
@@ -420,21 +430,23 @@ elif st.session_state.page == FIX_PAGE:
         ]
 
         st.markdown(
-            "<div class='center-container'><h3>🤍추구미에 도달하기 위한 [보완점]을 제시해드릴게요😉</h3></div>",
+            "<div class='center-container'><h3>📩 추구미에 도달하기 위한 보완점을 알려드려요!</h3></div>",
             unsafe_allow_html=True,
         )
 
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.image("assets/자연형보완점이미지.jpg", width=500)
+        fix_image_path = fix_image_map.get(ideal_type)
+
+        if fix_image_path:
+            st.image(fix_image_path, use_container_width=True)
+        st.divider()
 
         with st.container():
             st.markdown("### 핵심 메시지")
             st.markdown(f"""**{ideal_type}**은 {core_msg}""")
-        
+
             st.markdown("### 보완 방향")
             st.markdown(direction_msg)
-        
+
             st.markdown("### 일상 속 실천")
             st.markdown(f"- {actions[0]}")
             st.markdown(f"- {actions[1]}")
@@ -444,8 +456,7 @@ elif st.session_state.page == FIX_PAGE:
     # ================================
     # [공통] 하단 버튼 영역
     # ================================
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.divider()
+    st.markdown("<br><br>", unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -455,6 +466,3 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
-
-
-
