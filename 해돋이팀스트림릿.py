@@ -168,26 +168,47 @@ if st.session_state.page == 0:
     # 소개 문구
     st.markdown(
         """
+        <div align="center">
+    
+        ### 🤔 **추구미**에 대해 알고 계신가요? 
+    
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    
+    st.markdown(
+        """
+        <div align="center">
+    
+        ☑️ **추구미란?** <br>
+        '추구하다'와 '美(아름다울 미)'의 합성어로,  
+        Z세대가 자신의 이상적인 이미지를 추구하는 과정을 나타내는 신조어입니다.
+    
+        📋 **테스트 소개** <br>
+        이 테스트는 현재의 내 모습과 나의 추구미를 진단하고,  
+        추구미에 도달하기 위해 보완할 점을 제시해줍니다.<br><br>
+        각 Step은 13문항씩, 총 26문항으로 구성되어 있습니다.<br><br>
+    
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.divider()
+
+    st.markdown(
+    """
     <div align="center">
 
-    ### 🤔 **추구미**에 대해 알고 계신가요? 
-
-    ☑️ **추구미란?** <br>
-    '추구하다'와 '美(아름다울 미)'의 합성어로,  
-    Z세대가 자신의 이상적인 이미지를 추구하는 과정을 나타내는 신조어입니다.
-
- 
-    📋 **테스트 소개** <br>
-    이 테스트는 현재의 내 모습과 나의 추구미를 진단하고,  
-    추구미에 도달하기 위해 보완할 점을 제시해줍니다.<br><br>
-    각 Step은 13문항씩, 총 26문항으로 구성되어 있습니다.<br><br>
-    
     ### 👉 테스트를 시작할까요?
 
     </div>
     """,
-        unsafe_allow_html=True
+    unsafe_allow_html=True
     )
+    
 
     # 이름 입력
     st.markdown("<div class='center-container'><b>이름을 입력하세요.</b></div>", unsafe_allow_html=True)
@@ -199,7 +220,7 @@ if st.session_state.page == 0:
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("테스트 시작하기!", use_container_width=True):
+        if st.button("테스트를 시작하시겠습니까?", use_container_width=True):
             if not name.strip():
                 st.warning("이름을 입력해주세요.")
             else:
@@ -553,9 +574,3 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
-
-
-
-
-
-
