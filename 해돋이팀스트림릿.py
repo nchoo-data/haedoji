@@ -181,14 +181,13 @@ if st.session_state.page == 0:
     이 테스트는 현재의 내 모습과 나의 추구미를 진단하고,  
     추구미에 도달하기 위해 보완할 점을 제시해줍니다.<br><br>
     각 Step은 13문항씩, 총 26문항으로 구성되어 있습니다.<br><br>
-    **👉 테스트를 시작할까요?**
+    
+    ### 👉 테스트를 시작할까요?
 
     </div>
     """,
         unsafe_allow_html=True
     )
-
-    st.divider()
 
     # 이름 입력
     st.markdown("<div class='center-container'><b>이름을 입력하세요.</b></div>", unsafe_allow_html=True)
@@ -554,6 +553,7 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
 
