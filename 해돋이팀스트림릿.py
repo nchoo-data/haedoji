@@ -389,6 +389,47 @@ elif st.session_state.page == FIX_PAGE:
     # 타입 일치 여부 분기
     # ================================
     if current_type == ideal_type:
+        st.markdown(
+            """
+            <style>
+            .fireworks {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+            }
+
+            .spark {
+                position: absolute;
+                font-size: 44px;
+                animation: explode 2.1s ease-out infinite;
+            }
+
+            @keyframes explode {
+                0% {
+                    transform: scale(0) translateY(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.5) translateY(-120vh);
+                    opacity: 0;
+                }
+            }
+            </style>
+
+            <div class="fireworks">
+                <div class="spark" style="left:20%; top:88%; animation-duration:2.8s;">🎉</div>
+                <div class="spark" style="left:40%; top:88%; animation-duration:2.4s;">✨</div>
+                <div class="spark" style="left:50%; top:88%; animation-duration:3s;">💥</div>
+                <div class="spark" style="left:60%; top:88%; animation-duration:2.6s;">🎊</div>
+                <div class="spark" style="left:80%; top:88%; animation-duration:2.9s;">🎉</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
         # 타입이 일치할 경우: 축하 메시지 출력
         st.markdown(
@@ -407,7 +448,7 @@ elif st.session_state.page == FIX_PAGE:
         <div class='center-container'>
             <p>
                 당신의 현재 모습은 추구미와 일치하네요😉<br>
-                보완할 점이 없습니다.앞으로도 지금의 모습을 유지하세요💪
+                보완할 점이 없습니다. 앞으로도 지금의 모습을 유지하세요💪
             </p>
         """,
         unsafe_allow_html=True,
