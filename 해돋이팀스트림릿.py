@@ -430,7 +430,7 @@ elif st.session_state.page == FIX_PAGE:
 
         with st.container():
             st.markdown("### 핵심 메시지")
-            st.markdown(core_msg)
+            st.markdown(f"""**{ideal_type}**은 {core_msg}""")
         
             st.markdown("### 보완 방향")
             st.markdown(direction_msg)
@@ -455,5 +455,6 @@ elif st.session_state.page == FIX_PAGE:
             st.session_state.ideal_scores.clear()
             st.session_state.name = ""
             st.rerun()
+
 
 
