@@ -455,6 +455,51 @@ elif st.session_state.page == FIX_PAGE:
         )
     
     else:
+        st.markdown(
+            """
+            <style>
+            .cheer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+                overflow: hidden;
+            }
+
+            .cheer-icon {
+                position: absolute;
+                top: 88%;
+                font-size: 42px;
+                animation: cheer-up 4s ease-out infinite;
+            }
+
+            @keyframes cheer-up {
+                0% {
+                    transform: scale(0.6) translateY(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.2) translateY(-80vh);
+                    opacity: 0;
+                }
+            }
+            </style>
+
+            <div class="cheer">
+                <div class="cheer-icon" style="left:15%; animation-duration:2.8s;">💪</div>
+                <div class="cheer-icon" style="left:35%; animation-duration:2.4s;">👍</div>
+                <div class="cheer-icon" style="left:50%; animation-duration:3s;">💪</div>
+                <div class="cheer-icon" style="left:65%; animation-duration:2.6s;">👍</div>
+                <div class="cheer-icon" style="left:85%; animation-duration:2.9s;">💪</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
         # ================================
         # 타입 불일치 시 보완점 출력
         # ================================
